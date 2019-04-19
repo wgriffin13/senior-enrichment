@@ -6,9 +6,9 @@ const conn = new Sequelize(process.env.DATABASE_URL || 'postgres://localhost/sen
 
 const seed = {
     campuses: [
-        {name: faker.company.companyName(), imageUrl: faker.image.imageUrl(), address: faker.address.streetAddress(), description: faker.lorem.text()},
-        {name: faker.company.companyName(), imageUrl: faker.image.imageUrl(), address: faker.address.streetAddress(), description: faker.lorem.text()},
-        {name: faker.company.companyName(), imageUrl: faker.image.imageUrl(), address: faker.address.streetAddress(), description: faker.lorem.text()}
+        {name: faker.company.companyName(), imageUrl: faker.image.image(), address: faker.address.streetAddress(), description: faker.lorem.text()},
+        {name: faker.company.companyName(), imageUrl: faker.image.image(), address: faker.address.streetAddress(), description: faker.lorem.text()},
+        {name: faker.company.companyName(), imageUrl: faker.image.image(), address: faker.address.streetAddress(), description: faker.lorem.text()}
     ],
     students: [
         {firstName: faker.name.firstName(), lastName: faker.name.lastName(), email: faker.internet.email(), imageUrl: faker.image.avatar(), gpa: faker.random.number({min: 0, max: 4, precision: 0.01})},
