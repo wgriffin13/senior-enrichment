@@ -1,6 +1,17 @@
 const router = require('express').Router();
 const { Student, Campus } = require('../db')
 
+router.get('/campuses/:id', (req, res, next) => {
+    Campus.findOne({
+        where: {
+            id: req.params.id
+        },
+        include: [Student]
+    })
+        .then(data => res.send(data))
+        .catch(next)
+})
+
 router.get('/students', (req, res, next) => {
     Student.findAll()
         .then(data => res.send(data))

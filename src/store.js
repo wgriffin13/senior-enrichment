@@ -5,11 +5,20 @@ import thunk from 'redux-thunk';
 
 const initialState = {
     students: [],
-    campuses: []
+    campuses: [],
+    singleCampus: {}
 }
 
 const GOT_STUDENTS = 'GOT_STUDENTS';
 const GOT_CAMPUSES = 'GOT_CAMPUSES';
+const GOT_SINGLE_CAMPUS = 'GOT_SINGLE_CAMPUS';
+
+const gotSingleCampus = (campus) => (
+    {
+        type: GOT_SINGLE_CAMPUS,
+        singleCampus: campus
+    }
+)
 
 const gotStudents = (students) => (
     {
@@ -24,6 +33,16 @@ const gotCampuses = (campuses) => (
         campuses
     }
 )
+
+export const getSingleCampus = (campusId) => {
+    return (dispatch) => {
+        axios.get('/api/campuses/' + campusId)
+            .then(response => response.data)
+            .then(data => {
+                dispatch(gotSingleCampus(data))
+            })
+    }
+}
 
 export const getStudents = () => {
     return (dispatch) => {
@@ -51,6 +70,8 @@ const reducer = (state = initialState, action) => {
             return {...state, students: action.students}
         case GOT_CAMPUSES:
             return {...state, campuses: action.campuses}
+        case GOT_SINGLE_CAMPUS:
+            return {...state, singleCampus: action.singleCampus}
         default:
             return state
     }
