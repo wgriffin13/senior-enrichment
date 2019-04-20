@@ -1,6 +1,26 @@
 const router = require('express').Router();
 const { Student, Campus } = require('../db')
 
+router.delete('/students/:id', (req, res, next) => {
+    Student.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+        .then((rows, data) => res.json(data))
+        .catch(next)
+})
+
+router.delete('/campuses/:id', (req, res, next) => {
+    Campus.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+        .then((rows, data) => res.json(data))
+        .catch(next)
+})
+
 router.post('/students', (req, res, next) => {
     Student.create(req.body)
         .then(data => {

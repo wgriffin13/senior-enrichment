@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getCampuses } from './store';
+import { getCampuses, deletingCampus } from './store';
 import NewCampus from './NewCampus';
+import { IoIosClose } from 'react-icons/io';
 
 class Campuses extends Component {
 
@@ -26,16 +27,19 @@ class Campuses extends Component {
     render () {
         return (
             <div>
-                <div className="card-deck m-3">
+                <div className="card-columns m-3 sm-3 lg-6" style={{columnCount: 3}}>
                     {this.props.campuses.map(campus => {
                         return (
-                                <div key={campus.id} className="card">
+                                <div key={campus.id} className="card" style={{breakInside: 'avoid-column'}}>
                                     <Link to={`/campuses/${campus.id}`}>
                                         <img src={campus.imageUrl} className="card-img-top" />
-                                        <div className="card-body">
-                                            <h5 className="card-title">{campus.name}</h5>
-                                        </div>
                                     </Link>
+                                        <div className="card-body">
+                                            <Link to={`/campuses/${campus.id}`}>
+                                                <h5 className="card-title">{campus.name}</h5>
+                                            </Link>
+                                            <IoIosClose size="1.5em" color="red" onClick={() => this.props.requestDeleteCampus(campus.id)} />
+                                        </div>
                                 </div>
                         )
                     })}
@@ -54,7 +58,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        requestGetCampuses: () => dispatch(getCampuses())
+        requestGetCampuses: () => dispatch(getCampuses()),
+        requestDeleteCampus: (id) => dispatch(deletingCampus(id))
     }
 }
 

@@ -17,6 +17,22 @@ const GOT_SINGLE_CAMPUS = 'GOT_SINGLE_CAMPUS';
 const GOT_SINGLE_STUDENT = 'GOT_SINGLE_STUDENT';
 const NEW_CAMPUS = 'NEW_CAMPUS';
 const NEW_STUDENT = 'NEW_STUDENT';
+const DELETE_CAMPUS = 'DELETE_CAMPUS';
+const DELETE_STUDENT = 'DELETE_STUDENT';
+
+const deleteStudent = (studentId) => (
+    {
+        type: DELETE_STUDENT,
+        studentId
+    }
+)
+
+const deleteCampus = (campusId) => (
+    {
+        type: DELETE_CAMPUS,
+        campusId
+    }
+)
 
 const newStudent = (student) => (
     {
@@ -59,6 +75,26 @@ const gotCampuses = (campuses) => (
         campuses
     }
 )
+
+export const deletingStudent = (id) => {
+    return (dispatch) => {
+        axios.delete(`/api/students/${id}`)
+            .then(response => response.data)
+            .then(data => {
+                dispatch(deleteStudent(id))
+            })
+    }
+}
+
+export const deletingCampus = (id) => {
+    return (dispatch) => {
+        axios.delete(`/api/campuses/${id}`)
+            .then(response => response.data)
+            .then(data => {
+                dispatch(deleteCampus(id))
+            })
+    }
+}
 
 export const addNewStudent = (student) => {
     return (dispatch) => {
@@ -120,6 +156,7 @@ export const getCampuses = () => {
     }
 }
 
+// eslint-disable-next-line complexity
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case GOT_STUDENTS:
@@ -134,6 +171,10 @@ const reducer = (state = initialState, action) => {
             return {...state, campuses: [...state.campuses, action.campus]}
         case NEW_STUDENT:
             return {...state, students: [...state.students, action.student]}
+        case DELETE_STUDENT:
+            return {...state, students: state.students.filter(student => student.id !== action.studentId)}
+        case DELETE_CAMPUS:
+            return {...state, campuses: state.campuses.filter(campus => campus.id !== action.campusId)}
         default:
             return state
     }

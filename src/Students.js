@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getStudents, getCampuses } from './store';
+import { getStudents, getCampuses, deletingStudent } from './store';
 import { IoIosClose } from 'react-icons/io';
 import NewStudent from './NewStudent';
 
@@ -44,11 +44,11 @@ class Students extends Component {
                     <tbody>
                         {this.props.students.map(student => {
                             return (
-                                <tr key={student.id} onClick={() => this.goToSingleStudent(student.id)}>
-                                    <th scope="row">{student.id}</th>
-                                    <td>{student.firstName} {student.lastName}</td>
-                                    <td>{(this.props.campuses.filter(campus => campus.id === student.campusId)[0] === undefined) ? '' : (this.props.campuses.filter(campus => campus.id === student.campusId)[0].name)}</td>
-                                    <td><IoIosClose size="1.5em" color="red" /></td>
+                                <tr key={student.id}>
+                                    <th scope="row" onClick={() => this.goToSingleStudent(student.id)}>{student.id}</th>
+                                    <td onClick={() => this.goToSingleStudent(student.id)}>{student.firstName} {student.lastName}</td>
+                                    <td onClick={() => this.goToSingleStudent(student.id)}>{(this.props.campuses.filter(campus => campus.id === student.campusId)[0] === undefined) ? '' : (this.props.campuses.filter(campus => campus.id === student.campusId)[0].name)}</td>
+                                    <td><IoIosClose size="1.5em" color="red" onClick={() => this.props.requestDeleteStudent(student.id)} /></td>
                                 </tr>
                             )
                         })}
@@ -70,7 +70,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         requestGetStudents: () => dispatch(getStudents()),
-        requestGetCampuses: () => dispatch(getCampuses())
+        requestGetCampuses: () => dispatch(getCampuses()),
+        requestDeleteStudent: (id) => dispatch(deletingStudent(id))
     }
 }
 
