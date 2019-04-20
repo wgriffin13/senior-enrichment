@@ -4,6 +4,7 @@ import Nav from './Nav';
 import Campuses from './Campuses';
 import Students from './Students';
 import SingleCampus from './SingleCampus';
+import SingleStudent from './SingleStudent';
 
 class App extends Component {
 
@@ -17,7 +18,8 @@ class App extends Component {
                 </Switch>
                 <Route exact path="/campuses/:id" render={({ match }) => <SingleCampus match={match} />} />
                 <Route exact path="/campuses" component={Campuses} />
-                <Route exact path="/students" component={Students} />
+                <Route exact path="/students/:id" render={({ match }) => <SingleStudent match={match} />} />
+                <Route exact path="/students" render={({ history }) => <Students history={history} />} />
             </div>
         )
     }

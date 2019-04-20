@@ -12,6 +12,17 @@ router.get('/campuses/:id', (req, res, next) => {
         .catch(next)
 })
 
+router.get('/students/:id', (req, res, next) => {
+    Student.findOne({
+        where: {
+            id: req.params.id
+        },
+        include: [Campus]
+    })
+        .then(data => res.send(data))
+        .catch(next)
+})
+
 router.get('/students', (req, res, next) => {
     Student.findAll()
         .then(data => res.send(data))
