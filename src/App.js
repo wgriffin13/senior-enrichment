@@ -5,6 +5,7 @@ import Campuses from './Campuses';
 import Students from './Students';
 import SingleCampus from './SingleCampus';
 import SingleStudent from './SingleStudent';
+import NotFound from './NotFound';
 
 class App extends Component {
 
@@ -16,10 +17,13 @@ class App extends Component {
                 <Switch>
                     <Redirect exact from="/" to="/campuses" />
                 </Switch>
-                <Route exact path="/campuses/:id" render={({ match }) => <SingleCampus match={match} />} />
-                <Route exact path="/campuses" component={Campuses} />
-                <Route exact path="/students/:id" render={({ match }) => <SingleStudent match={match} />} />
-                <Route exact path="/students" render={({ history }) => <Students history={history} />} />
+                <Switch>
+                    <Route exact path="/campuses/:id" render={({ match }) => <SingleCampus match={match} />} />
+                    <Route exact path="/campuses" component={Campuses} />
+                    <Route exact path="/students/:id" render={({ match }) => <SingleStudent match={match} />} />
+                    <Route exact path="/students" render={({ history }) => <Students history={history} />} />
+                    <Route path="/" component={NotFound} />
+                </Switch>
             </div>
         )
     }

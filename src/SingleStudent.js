@@ -12,32 +12,35 @@ class SingleStudent extends Component {
     render () {
         return (
             <div>
-                <div className="row mt-3 no-gutters">
-                    <div className="col-md-6">
-                        <img src={this.props.singleStudent.imageUrl} className="img-fluid float-left" />
+                {(this.props.singleStudent.id === undefined) ? <div className="mt-3 text-center"><h2><b>No student found</b></h2></div> :
+                (<div>
+                    <div className="row mt-3 no-gutters">
+                        <div className="col-md-6">
+                            <img src={this.props.singleStudent.imageUrl} className="img-fluid float-left" />
+                        </div>
                     </div>
-                </div>
-                <div className="row mt-2">
-                    <div className="col">
-                        <h2>{this.props.singleStudent.firstName} {this.props.singleStudent.lastName}</h2>
+                    <div className="row mt-2">
+                        <div className="col">
+                            <h2>{this.props.singleStudent.firstName} {this.props.singleStudent.lastName}</h2>
+                        </div>
                     </div>
-                </div>
-                <div className="row mt-1">
-                    <div className="col">
-                        <h5>{this.props.singleStudent.email}</h5>
+                    <div className="row mt-1">
+                        <div className="col">
+                            <h5>{this.props.singleStudent.email}</h5>
+                        </div>
                     </div>
-                </div>
-                <div className="row mt-1">
-                    <div className="col">
-                        <h5>GPA: {this.props.singleStudent.gpa}</h5>
+                    <div className="row mt-1">
+                        <div className="col">
+                            <h5>GPA: {this.props.singleStudent.gpa}</h5>
+                        </div>
                     </div>
-                </div>
-                <div className="row mt-1">
-                    <div className="col">
-                    {(this.props.singleStudent.campus === null || this.props.singleStudent.campus === undefined) ? <h5>Campus: student does not have a campus!</h5> :
-                        (<h5>Campus: <Link to={`/campuses/${this.props.singleStudent.campus.id}`}>{this.props.singleStudent.campus.name}</Link></h5>)}
+                    <div className="row mt-1">
+                        <div className="col">
+                        {(this.props.singleStudent.campus === null || this.props.singleStudent.campus === undefined) ? <h5>Campus: student does not have a campus!</h5> :
+                            (<h5>Campus: <Link to={`/campuses/${this.props.singleStudent.campus.id}`}>{this.props.singleStudent.campus.name}</Link></h5>)}
+                        </div>
                     </div>
-                </div>
+                 </div>)}
             </div>
         )
     }

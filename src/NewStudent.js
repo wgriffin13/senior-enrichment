@@ -9,7 +9,8 @@ class NewStudent extends Component {
         this.state = {
             firstName: '',
             lastName: '',
-            email: ''
+            email: '',
+            inputWarning: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,8 +18,13 @@ class NewStudent extends Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        this.props.requestAddNewStudent(this.state)
-        this.props.addingNewStudent()
+        if (this.state.firstName !== '' && this.state.lastName !== '' && this.state.email !== '') {
+            this.setState({inputWarning: false})
+            this.props.requestAddNewStudent(this.state)
+            this.props.addingNewStudent()
+        } else {
+            this.setState({inputWarning: true})
+        }
     }
 
     handleChange(event) {
@@ -29,6 +35,7 @@ class NewStudent extends Component {
         return (
             <div className="m-3">
                 <h2>{this.props.title}</h2>
+                {(this.state.inputWarning === true) ? <div className="alert alert-warning" role="alert">Please enter a valid <b>first name and last name</b> and <b>email</b>.</div> : ''}
                 <form onSubmit={(event) => this.handleSubmit(event)}>
                     <div className="form-group">
                         <label>First Name</label>
