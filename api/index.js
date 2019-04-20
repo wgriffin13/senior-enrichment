@@ -1,6 +1,22 @@
 const router = require('express').Router();
 const { Student, Campus } = require('../db')
 
+router.post('/students', (req, res, next) => {
+    Student.create(req.body)
+        .then(data => {
+            res.json(data)
+        })
+        .catch(next)
+})
+
+router.post('/campuses', (req, res, next) => {
+    Campus.create(req.body)
+        .then(data => {
+            res.json(data)
+        })
+        .catch(next)
+})
+
 router.get('/campuses/:id', (req, res, next) => {
     Campus.findOne({
         where: {
